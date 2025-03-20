@@ -35,7 +35,7 @@ class GameMap extends GameObject {
 W:跳跃                                     ⬆:跳跃
 A:向后移动                               ➡:向后移动
 D:向前移动                               ⬅:向前移动
-Space:攻击                               EnterEnter:攻击`)
+Space:攻击                               Enter:攻击`)
     }
 
     update() {
