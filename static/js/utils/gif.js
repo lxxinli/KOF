@@ -271,15 +271,18 @@ const GIF = function () {
     function loadGif(filename) { // starts the load
         var ajax = new XMLHttpRequest();
         ajax.responseType = "arraybuffer";
+        const baseUrl = window.location.origin; 
+        const absPath = new URL(filename, baseUrl).href;  // 将路径转为绝对路径
+    
+        ajax.open('GET', absPath, true);
         ajax.onload = function (e) {
             if (e.target.status === 404) { error("File not found") }
             else if (e.target.status >= 200 && e.target.status < 300) { dataLoaded(ajax.response) }
             else { error("Loading error : " + e.target.status) }
         };
-        ajax.open('GET', filename, true);
         ajax.send();
         ajax.onerror = function (e) { error("File error") };
-        this.src = filename;
+        this.src = absPath;
         this.loading = true;
     }
     function play() { // starts play if paused

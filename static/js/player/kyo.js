@@ -1,6 +1,5 @@
 import { Player } from "./player.js";
 import {GIF} from "../utils/gif.js"
-
 // 定义人物角色类，继承自player.js
 class Kyo extends Player {
     constructor(root, info)
@@ -17,7 +16,7 @@ class Kyo extends Player {
         for (let i = 0; i < 7; i ++)
         {
             let gif = GIF();
-            gif.load(`../static/images/player/kyo/${i}.gif`);
+            gif.load(`./static/images/player/kyo/${i}.gif`);
 
             this.animations.set(i, {
                 gif: gif,
