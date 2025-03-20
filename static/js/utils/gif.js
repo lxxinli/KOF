@@ -268,21 +268,33 @@ const GIF = function () {
         st = new Stream(data);
         parse();
     }
-    function loadGif(filename) { // starts the load
+    function loadGif(filename) {  
         var ajax = new XMLHttpRequest();
         ajax.responseType = "arraybuffer";
-        const baseUrl = window.location.origin; 
-        const absPath = new URL(filename, baseUrl).href;  // 将路径转为绝对路径
     
-        ajax.open('GET', absPath, true);
+        // ✅ 确保始终使用相对路径，不解析为绝对 URL
+        const isLocal = window.location.protocol === "file:" || window.location.hostname === "127.0.0.1";
+        const path = isLocal ? filename : `${window.location.pathname.replace(/\/$/, '')}/${filename}`;
+    
+        ajax.open('GET', path, true);
+    
         ajax.onload = function (e) {
-            if (e.target.status === 404) { error("File not found") }
-            else if (e.target.status >= 200 && e.target.status < 300) { dataLoaded(ajax.response) }
-            else { error("Loading error : " + e.target.status) }
+            if (e.target.status === 404) {
+                error("File not found");
+            } else if (e.target.status >= 200 && e.target.status < 300) {
+                dataLoaded(ajax.response);
+            } else {
+                error("Loading error : " + e.target.status);
+            }
         };
+    
+        ajax.onerror = function () {
+            error("File error");
+        };
+    
         ajax.send();
-        ajax.onerror = function (e) { error("File error") };
-        this.src = absPath;
+    
+        this.src = path;    // 显示当前路径，防止解析为绝对路径
         this.loading = true;
     }
     function play() { // starts play if paused
