@@ -23,10 +23,19 @@ class GameMap extends GameObject {
 
         this.time_left = 60000;        // 剩余时间（单位：ms）
         this.$timer = this.root.$kof.find(".kof-head-timer")
+
+        this.$text = $(`textarea`);
     }
 
     start() {
+        // 插入游戏玩法提示：
+        this.$text.text(`游戏玩法：
 
+玩家1:                                      玩家2:
+W:跳跃                                     ⬆:跳跃
+A:向后移动                               ➡:向后移动
+D:向前移动                               ⬅:向前移动
+Space:攻击                               EnterEnter:攻击`)
     }
 
     update() {
